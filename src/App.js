@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
 import './App.css';
 import logo from './logo.svg';
+import { useForm, ValidationError } from '@formspree/react';
 
 // Slider'da kullanılacak örnek fotoğraflar (public klasörüne eklenmeli)
 const sliderImages = [
@@ -198,6 +199,34 @@ function Services() {
   );
 }
 
+function ContactForm() {
+  const [state, handleSubmit] = useForm("movwozqo");
+  if (state.succeeded) {
+      return <p>Mesajınız başarıyla gönderildi. Teşekkürler!</p>;
+  }
+  return (
+    <form className="contactpage-form" onSubmit={handleSubmit} style={{maxWidth: 520, margin: '0 auto'}}>
+      <div className="contactpage-form-row">
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="E-Posta Adresiniz"
+          required
+        />
+      </div>
+      <input type="text" name="name" placeholder="Adınız" required />
+      <input type="text" name="subject" placeholder="Konu" required />
+      <textarea id="message" name="message" placeholder="Mesajınız" rows={4} required />
+      <ValidationError prefix="Email" field="email" errors={state.errors} />
+      <ValidationError prefix="Message" field="message" errors={state.errors} />
+      <button type="submit" className="contactpage-btn" disabled={state.submitting}>
+        Gönder
+      </button>
+    </form>
+  );
+}
+
 function Contact() {
   return (
     <div className="contactpage-section">
@@ -241,15 +270,8 @@ function Contact() {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-        <form className="contactpage-form">
-          <div className="contactpage-form-row">
-            <input type="text" placeholder="Adınız" required />
-            <input type="email" placeholder="E-Posta Adresiniz" required />
-          </div>
-          <input type="text" placeholder="Konu" required />
-          <textarea placeholder="Mesajınız" rows={4} required></textarea>
-          <button type="submit" className="contactpage-btn">GÖNDER</button>
-        </form>
+        {/* Formspree ile çalışan iletişim formu */}
+        <ContactForm />
       </div>
     </div>
   );
