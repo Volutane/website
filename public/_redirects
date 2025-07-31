@@ -1,2 +1,7 @@
-/*    /index.html   200
-https://www.ersoyotokurtarici.com/*  https://ersoyotokurtarici.com/:splat  301!
+# Tüm HTTP isteklerini HTTPS'e yönlendir
+http://ersoyotokurtarici.com/* https://ersoyotokurtarici.com/:splat 301!
+http://www.ersoyotokurtarici.com/* https://ersoyotokurtarici.com/:splat 301!
+https://www.ersoyotokurtarici.com/* https://ersoyotokurtarici.com/:splat 301!
+
+# SPA için fallback (örneğin React/Vue/SvelteKit vs.)
+/* /index.html 200
